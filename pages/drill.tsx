@@ -7,8 +7,13 @@ const stripePromise = loadStripe("pk_test_51J1TyKLqUjiXusfCouAMNY7rpc8oqlT2Nnmlg
 
 export default function Drill() {
 
-    const handleClick = async (event) => {
+    const handleClick = async () => {
         const stripe = await stripePromise;
+
+        if (!stripe) {
+            return;
+        }
+
         const response = await fetch("/api/checkout_session", {
             method: "POST",
         });
