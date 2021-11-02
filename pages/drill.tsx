@@ -34,7 +34,6 @@ export default function Drill() {
             <Head>
                 <title>Drill Suppers</title>
                 <meta name="description" content="Buy a drill supper" />
-                <link rel="icon" href="/favicon.ico" />
             </Head>
 
             <main className={styles.main}>
@@ -43,12 +42,12 @@ export default function Drill() {
                     <fieldset style={{ padding: '1em', marginBottom: '2em' }}>
                         <legend>Person</legend>
                         <div>
+                            <label htmlFor="initials" style={{ display: 'block', width: '250px' }}>Initials</label>
+                            <input id="initials" type="text" style={{ display: 'block', width: '250px' }} />
+                        </div>
+                        <div>
                             <label htmlFor="name" style={{ display: 'block', width: '250px' }}>Name</label>
                             <input id="name" type="text" style={{ display: 'block', width: '250px' }} />
-                        </div>
-                        <div style={{ marginTop: '2em' }}>
-                            <label htmlFor="army-number" style={{ display: 'block', width: '250px' }}>Army Number</label>
-                            <input id="army-number" type="text" style={{ display: 'block', width: '250px' }} />
                         </div>
                     </fieldset>
                     <fieldset style={{ padding: '1em' }}>
