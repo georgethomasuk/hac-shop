@@ -41,7 +41,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             },
         ],
         mode: 'payment',
-        success_url: `${YOUR_DOMAIN}?success=true`,
+        success_url: `${YOUR_DOMAIN}/thankyou`,
         cancel_url: `${YOUR_DOMAIN}?canceled=true`,
     });
 
