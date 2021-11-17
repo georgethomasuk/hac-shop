@@ -7,9 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2020-08-
 const YOUR_DOMAIN = process.env.APP_DOMAIN;
 
 
-type Data = {
-    id: string
-}
+type Data = any;
 
 async function getSessionData(session: Stripe.Checkout.Session) {
     const line_items = await stripe.checkout.sessions.listLineItems(session.id);
@@ -20,6 +18,7 @@ async function getSessionData(session: Stripe.Checkout.Session) {
             sessionId: session.id,
             item: line_item.description,
             quantity: line_item.quantity,
+            // @ts-ignore
             customer_email: customer ? customer.email : 'Unknown Email',
         }
     })
