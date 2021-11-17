@@ -4,7 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import { mealOptions, validMealDates } from '../utils/mealConfig';
 
-const stripePromise = loadStripe("pk_test_51J1TyKLqUjiXusfCouAMNY7rpc8oqlT2Nnmlg2fKdNX1MKxh6KRjGY264kYrFcgKE9KF9VNVSNi9CmVVa7rRrJZ200XFNM9APy");
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 export default function Home() {
 
@@ -31,7 +31,6 @@ export default function Home() {
 
       try {
         const body = {
-          name,
           email,
           date: selectedDate,
           drillSupperCount: drillSupperCount,
@@ -83,11 +82,6 @@ export default function Home() {
             <div className="col">
               <div className="card">
                 <div className="card-body">
-                  <div className="mb-3">
-                    <label htmlFor="nameInput" className="form-label">Your Name (required):</label>
-                    <input type="text" className="form-control" id="nameInput" aria-describedby="nameHelp" required value={name} onChange={event => setName(event.target.value)} disabled={loading}/>
-                    <div id="nameHelp" className="form-text">To add to our list on the night.</div>
-                  </div>
                   <div className="mb-3">
                     <label htmlFor="emailInput" className="form-label">Email address (required):</label>
                     <input type="email" className="form-control" id="emailInput" aria-describedby="emailHelp" required  value={email} onChange={event => setEmail(event.target.value)} disabled={loading}/>

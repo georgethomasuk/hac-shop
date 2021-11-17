@@ -2,9 +2,9 @@ import Stripe from 'stripe';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { mealOptions } from '../../utils/mealConfig';
 
-const stripe = new Stripe('sk_test_51J1TyKLqUjiXusfCjAaSX7pAc37us8BatbmfbnGeeF7M7aCjETYAJz6YYY5b9Syv3faZqlbNjI7435C28O7YuwPO00zmUOqDUM', { apiVersion: "2020-08-27" });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2020-08-27" });
 
-const YOUR_DOMAIN = 'https://hac-shop.vercel.app';
+const YOUR_DOMAIN = process.env.APP_DOMAIN;
 
 
 type Data = {
