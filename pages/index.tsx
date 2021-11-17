@@ -11,13 +11,12 @@ export default function Home() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedDate, setSelectedDate] = useState<null|string>(null);
-  const [vegetarianMealCount, setVegetarianMealCount] = useState(0);
-  const [nonVegetarianMealCount, setNonVegetarianMealCount] = useState(0);
+  const [drillSupperCount, setDrillSupperCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const mealDates = validMealDates();
 
-  const canSubmit = (!loading) && (selectedDate !== null && selectedDate !== "null") && (vegetarianMealCount + nonVegetarianMealCount > 0);
+  const canSubmit = (!loading) && (selectedDate !== null && selectedDate !== "null") && (drillSupperCount > 0);
 
   const handleCheckoutSubmit = async () => {
       console.log('submit');
@@ -35,8 +34,7 @@ export default function Home() {
           name,
           email,
           date: selectedDate,
-          vegetarianMealCount: vegetarianMealCount,
-          nonVegetarianMealCount: nonVegetarianMealCount,
+          drillSupperCount: drillSupperCount,
         }
   
         const response = await fetch("/api/checkout_session", {
@@ -111,8 +109,8 @@ export default function Home() {
                         <option value="null" disabled>Select Date</option>
                         {
                           mealDates.map(mealDate => {
-                            return <option key={mealDate.date.toISODate()} value={mealDate.date.toISODate()} disabled={mealDate.onSale === false}>
-                              {mealDate.date.toFormat('dd LLL yyyy (ccc)', { locale: "en-GB" })}{mealDate.onSale === false ? ` (${mealDate.offSaleReason})` : ''}
+                            return <option key={mealDate.date.toISODate()} value={mealDate.date.toISO().split('.')[0]} disabled={mealDate.onSale === false}>
+                              {mealDate.date.toFormat('ccc dd LLL, h.mma', { locale: "en-GB" })}{mealDate.onSale === false ? ` (${mealDate.offSaleReason})` : ''}
                             </option>
                           })
                         }
@@ -126,51 +124,21 @@ export default function Home() {
                         <div className="card-body">
                           <div className="row">
                             <div className="col-6">
-                              <div className="fs-8 fw-bold">{mealOptions.vegetarianMeal.name}</div>
-                              <div className="fs-10">£{mealOptions.vegetarianMeal.unit_cost / 100}</div>
+                              <div className="fs-8 fw-bold">{mealOptions.drillSupper.name}</div>
+                              <div className="fs-10">£{mealOptions.drillSupper.unit_cost / 100}</div>
                             </div>
                             <div className="col-6">
                               <div className="row mt-1">
                                 <div className="col-4 text-center">
-                                  <button type="button" disabled={vegetarianMealCount < 1 || loading} className="btn btn-secondary" onClick={() => setVegetarianMealCount(vegetarianMealCount - 1)}>-</button>
+                                  <button type="button" disabled={drillSupperCount < 1 || loading} className="btn btn-secondary" onClick={() => setDrillSupperCount(drillSupperCount - 1)}>-</button>
                                 </div>
                                 <div className="col-4 card text-center">
                                   <div className="card-body" style={{ height: 38, padding: 0 }}>
-                                    <p style={{ lineHeight: '38px' }}>{vegetarianMealCount}</p>
+                                    <p style={{ lineHeight: '38px' }}>{drillSupperCount}</p>
                                   </div>
                                 </div>
                                 <div className="col-4 text-center">
-                                  <button type="button" className="btn btn-secondary"  disabled={loading || vegetarianMealCount >= mealOptions.vegetarianMeal.max} onClick={() => setVegetarianMealCount(vegetarianMealCount + 1)}>+</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="row mt-4">
-                    <div className="col">
-                      <div className="card">
-                        <div className="card-body">
-                          <div className="row">
-                            <div className="col-6">
-                              <div className="fs-8 fw-bold">{mealOptions.nonVegetarianMeal.name}</div>
-                              <div className="fs-10">£{mealOptions.nonVegetarianMeal.unit_cost / 100}</div>
-                            </div>
-                            <div className="col-6">
-                              <div className="row mt-1">
-                                <div className="col-4 text-center">
-                                  <button type="button" disabled={nonVegetarianMealCount < 1 || loading} className="btn btn-secondary" onClick={() => setNonVegetarianMealCount(nonVegetarianMealCount - 1)}>-</button>
-                                </div>
-                                <div className="col-4 card text-center">
-                                  <div className="card-body" style={{ height: 38, padding: 0 }}>
-                                    <p style={{ lineHeight: '38px' }}>{nonVegetarianMealCount}</p>
-                                  </div>
-                                </div>
-                                <div className="col-4 text-center">
-                                  <button type="button" className="btn btn-secondary" onClick={() => setNonVegetarianMealCount(nonVegetarianMealCount + 1)}  disabled={loading  || vegetarianMealCount >= mealOptions.nonVegetarianMeal.max}>+</button>
+                                  <button type="button" className="btn btn-secondary" onClick={() => setDrillSupperCount(drillSupperCount + 1)}  disabled={loading  || drillSupperCount >= mealOptions.drillSupper.max}>+</button>
                                 </div>
                               </div>
                             </div>
@@ -189,7 +157,7 @@ export default function Home() {
               <div className="d-grid gap-2">
                 <button className="btn btn-primary" type="submit" disabled={canSubmit === false}>
                   { 
-                    loading ? <div className="spinner-border" role="status"></div> : <span>Checkout</span>
+                    loading ? <div className="spinner-border" role="status"></div> : <span>Checkout (£{(drillSupperCount * mealOptions.drillSupper.unit_cost) / 100})</span>
                   }  
                 </button>
               </div>

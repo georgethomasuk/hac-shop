@@ -10,6 +10,7 @@
   "dependencies": {
     "@stripe/stripe-js": "^1.15.0",
     "@types/luxon": "^2.0.5",
+    "lodash.sortby": "^4.7.0",
     "luxon": "^2.0.2",
     "next": "10.2.3",
     "react": "17.0.2",

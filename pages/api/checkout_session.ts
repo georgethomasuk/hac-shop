@@ -13,8 +13,6 @@ type Data = {
 
 export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-    console.log(req.body);
-
     const session = await stripe.checkout.sessions.create({
         customer_email: req.body.email,
         payment_method_types: ['card'],
@@ -23,21 +21,11 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                 price_data: {
                     currency: 'gbp',
                     product_data: {
-                        name: `${mealOptions.vegetarianMeal.name} (${req.body.date})`,
+                        name: `${mealOptions.drillSupper.name}/${req.body.date}`,
                     },
-                    unit_amount: mealOptions.vegetarianMeal.unit_cost,
+                    unit_amount: mealOptions.drillSupper.unit_cost,
                 },
-                quantity: req.body.vegetarianMealCount,
-            },
-            {
-                price_data: {
-                    currency: 'gbp',
-                    product_data: {
-                        name: `${mealOptions.nonVegetarianMeal.name} (${req.body.date})`,
-                    },
-                    unit_amount: mealOptions.nonVegetarianMeal.unit_cost,
-                },
-                quantity: req.body.nonVegetarianMealCount,
+                quantity: req.body.drillSupperCount,
             },
         ],
         mode: 'payment',

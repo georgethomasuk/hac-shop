@@ -1,15 +1,10 @@
 import { DateTime, Duration, Interval } from 'luxon';
 
 export const mealOptions = {
-    vegetarianMeal: {
-        name: 'Vegetarian Meal',
+    drillSupper: {
+        name: 'Drill Supper',
         unit_cost: 500,
-        max: 10
-    },
-    nonVegetarianMeal: {
-        name: 'Non-Vegetarian Meal',
-        unit_cost: 500,
-        max: 10
+        max: 6
     },
 }
 
