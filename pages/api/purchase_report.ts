@@ -13,7 +13,7 @@ type Data = {
 
 async function getSessionData(session: Stripe.Checkout.Session) {
     const line_items = await stripe.checkout.sessions.listLineItems(session.id);
-    const customer = session.customer ? await stripe.customers.retrieve(session.customer) : {};
+    const customer = session.customer ? await stripe.customers.retrieve(String(session.customer)) : null;
 
     return line_items.data.map(line_item => {
         return {
